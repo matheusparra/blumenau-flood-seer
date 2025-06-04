@@ -9,7 +9,48 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      flood_data: {
+        Row: {
+          chuva_1h: number
+          chuva_24h: number
+          chuva_6h: number
+          created_at: string
+          id: string
+          nivel_rio: number
+          risco_enchente: number
+          tendencia_rio: number
+          umidade: number
+          updated_at: string
+          vento: number
+        }
+        Insert: {
+          chuva_1h: number
+          chuva_24h: number
+          chuva_6h: number
+          created_at?: string
+          id?: string
+          nivel_rio: number
+          risco_enchente: number
+          tendencia_rio: number
+          umidade: number
+          updated_at?: string
+          vento: number
+        }
+        Update: {
+          chuva_1h?: number
+          chuva_24h?: number
+          chuva_6h?: number
+          created_at?: string
+          id?: string
+          nivel_rio?: number
+          risco_enchente?: number
+          tendencia_rio?: number
+          umidade?: number
+          updated_at?: string
+          vento?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
