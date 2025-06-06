@@ -99,7 +99,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 # 3. (Opcional) Treine o modelo de IA. Um modelo pré-treinado já está incluso.
-python src/treino_modelo.py
+python Servidor/treino_modelo.py
 
 # 4. Inicie o servidor Flask
 # O servidor rodará em http://127.0.0.1:5000
