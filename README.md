@@ -1,73 +1,174 @@
-# Welcome to your Lovable project
+Ok, com base na sua solicitação e na análise completa dos arquivos, aqui está um `README.md` completo e detalhado para o projeto **Blumenau Flood Seer**. Ele incorpora suas especificações sobre a fonte de dados e a simulação com Wokwi.
 
-## Project info
+-----
 
-**URL**: https://lovable.dev/projects/967fbdc3-688d-4987-b114-5c20cb189d7b
+# 🌊 Blumenau Flood Seer
 
-## How can I edit this code?
+**Status:** `Prova de Conceito (POC) Funcional`
 
-There are several ways of editing your application.
+Um projeto desenvolvido para a **Global Solution 2025.1 da FIAP**, focado na previsão, monitoramento e mitigação dos impactos de enchentes em Blumenau/SC, utilizando Inteligência Artificial e simulação de hardware IoT.
 
-**Use Lovable**
+-----
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/967fbdc3-688d-4987-b114-5c20cb189d7b) and start prompting.
+### Tabela de Conteúdos
 
-Changes made via Lovable will be committed automatically to this repo.
+1.  [Sobre o Projeto](https://www.google.com/search?q=%231-sobre-o-projeto-)
+2.  [Arquitetura da Solução](https://www.google.com/search?q=%232-arquitetura-da-solu%C3%A7%C3%A3o-)
+3.  [Fonte de Dados: AlertaBlu](https://www.google.com/search?q=%233-fonte-de-dados-alertablu-)
+4.  [Hardware e Simulação com Wokwi](https://www.google.com/search?q=%234-hardware-e-simula%C3%A7%C3%A3o-com-wokwi-%EF%B8%8F)
+5.  [Tecnologias Utilizadas](https://www.google.com/search?q=%235-tecnologias-utilizadas-)
+6.  [Como Executar o Projeto](https://www.google.com/search?q=%236-como-executar-o-projeto-)
+7.  [Estrutura do Repositório](https://www.google.com/search?q=%237-estrutura-do-reposit%C3%B3rio-)
+8.  [Integrantes](https://www.google.com/search?q=%238-integrantes-)
 
-**Use your preferred IDE**
+-----
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 1\. Sobre o Projeto 🎯
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+O **Blumenau Flood Seer** é uma plataforma digital completa que visa combater os desafios impostos pelas cheias recorrentes em Blumenau. A solução integra dados históricos e em tempo real para alimentar um modelo de Machine Learning capaz de prever o nível do rio, gerando alertas e fornecendo visualizações claras para auxiliar na tomada de decisão de autoridades e cidadãos.
 
-Follow these steps:
+O sistema é composto por:
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+  * Uma **interface web interativa** para visualização de dados e alertas.
+  * Uma **API backend** que centraliza a lógica de negócio e as predições.
+  * Um **modelo de IA** treinado para prever o nível do rio com base em dados de chuva e medições anteriores.
+  * Uma **simulação de sensor IoT (ESP32)** que envia dados de medição para a plataforma.
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 2\. Arquitetura da Solução 🏗️
 
-# Step 3: Install the necessary dependencies.
-npm i
+A solução é modular e foi desenhada para ser escalável, dividindo-se nos seguintes componentes:
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+  * **Frontend (Cliente Web):** Desenvolvido em **React com TypeScript**, oferece uma experiência de usuário rica e reativa. Renderiza mapas, gráficos e os alertas gerados pelo backend.
+  * **Backend (Servidor API):** Construído com **Flask (Python)**, serve como o cérebro da operação. Ele expõe endpoints para o frontend, processa os dados recebidos dos sensores e executa o modelo de IA para gerar previsões.
+  * **Inteligência Artificial (ML):** Utilizando **Scikit-learn**, um modelo de regressão linear foi treinado para prever o nível do rio (`river_level_m`). O script `treino_modelo.py` pode ser usado para retreinar e atualizar o modelo.
+  * **Microcontrolador (Simulação IoT):** Para simular a coleta de dados em campo, utilizamos o **Wokwi**, uma plataforma online de simulação de circuitos. Um ESP32 simulado com um sensor de nível de água envia dados para um script Python (`simulator.py`) que, por sua vez, os repassa para a API do backend, imitando um dispositivo real em operação.
+
+## 3\. Fonte de Dados: AlertaBlu 📊
+
+Para garantir a máxima relevância e precisão para o problema específico de Blumenau, optamos por utilizar a base de dados fornecida pelo **AlertaBlu**, o Sistema de Monitoramento e Alerta de Eventos Extremos de Blumenau.
+
+Os dados, contidos no arquivo `Data/dados_enchentes.csv`, incluem registros históricos cruciais como:
+
+  * `data_hora`: Timestamp da medição.
+  * `rain_mm`: Precipitação em milímetros.
+  * `river_level_m`: Nível do rio em metros.
+
+Essa escolha garante que nosso modelo seja treinado com informações que refletem a realidade hidrológica da região, aumentando a acurácia e a utilidade das previsões.
+
+## 4\. Hardware e Simulação com Wokwi ⚙️
+
+Um dos requisitos da Global Solution é a integração com um microcontrolador **ESP32** e sensores. Para esta prova de conceito, realizamos uma simulação completa e funcional utilizando a plataforma **Wokwi**.
+
+  * **Circuito Simulado:** O arquivo `microcontrolador/diagram.json` contém a definição do nosso circuito no Wokwi, que consiste em um **ESP32** conectado a um sensor ultrassônico para medir a distância até a superfície da água (simulando o nível do rio).
+  * **Integração com Python:** O Wokwi permite que o código do ESP32 (em MicroPython ou C++) se comunique com o ambiente externo. O script `microcontrolador/simulator.py` atua como uma "ponte": ele recebe os dados gerados pelo ESP32 simulado e os envia via requisições HTTP para a nossa API Flask, exatamente como um dispositivo físico faria.
+
+Essa abordagem nos permite validar toda a arquitetura de software e o fluxo de dados (Sensor -\> API -\> Frontend) de forma robusta, antes da implementação em hardware físico.
+
+## 5\. Tecnologias Utilizadas 💻
+
+| Componente | Tecnologia/Framework |
+| :--- | :--- |
+| **Backend** | `Python`, `Flask`, `Pandas`, `Waitress` |
+| **Inteligência Artificial**| `Scikit-learn` |
+| **Frontend** | `React`, `TypeScript`, `Vite`, `TailwindCSS`, `Shadcn/ui` |
+| **Hardware (Simulação)**| `Wokwi`, `ESP32` |
+| **Banco de Dados** | `Supabase` (para dados em tempo real no frontend) |
+
+## 6\. Como Executar o Projeto 🚀
+
+Siga os passos abaixo para configurar e rodar a aplicação em seu ambiente local.
+
+#### **Pré-requisitos**
+
+  * **Python** (versão 3.9 ou superior)
+  * **Node.js** e **npm** (ou Yarn)
+  * Acesso a um terminal ou linha de comando
+
+-----
+
+#### **1. Backend & IA**
+
+Do diretório raiz do projeto:
+
+```bash
+# 1. Crie e ative um ambiente virtual (recomendado)
+python -m venv venv
+# No Windows:
+.\venv\Scripts\activate
+# No macOS/Linux:
+source venv/bin/activate
+
+# 2. Instale as dependências do Python
+pip install -r requirements.txt
+
+# 3. (Opcional) Treine o modelo de IA. Um modelo pré-treinado já está incluso.
+python src/treino_modelo.py
+
+# 4. Inicie o servidor Flask
+# O servidor rodará em http://127.0.0.1:5000
+python Servidor/app.py
+```
+
+-----
+
+#### **2. Frontend**
+
+Em um **novo terminal**, na raiz do projeto:
+
+```bash
+# 1. Instale as dependências do Node.js
+npm install
+
+# 2. Inicie o servidor de desenvolvimento do Vite
+# A interface estará acessível em http://localhost:5173
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+-----
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+#### **3. Simulação do Sensor ESP32**
 
-**Use GitHub Codespaces**
+Para completar o fluxo, inicie o simulador que envia dados para o backend. Em um **terceiro terminal**:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```bash
+# 1. Certifique-se de que seu ambiente virtual Python está ativado
 
-## What technologies are used for this project?
+# 2. Execute o script do simulador
+python microcontrolador/simulator.py
+```
 
-This project is built with:
+Agora, com os três componentes rodando, acesse **`http://localhost:5173`** em seu navegador para ver a aplicação completa em funcionamento\!
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 7\. Estrutura do Repositório 📁
 
-## How can I deploy this project?
+```
+.
+├── Data/
+│   └── dados_enchentes.csv    # Base de dados do AlertaBlu
+├── Lib/                       # Dependências do ambiente virtual
+├── microcontrolador/
+│   ├── diagram.json           # Diagrama do circuito no Wokwi
+│   └── simulator.py           # Script que simula o envio de dados do sensor
+├── Servidor/
+│   └── app.py                 # Servidor API em Flask
+├── src/
+│   ├── components/            # Componentes React
+│   ├── hooks/                 # Hooks React
+│   ├── pages/                 # Páginas da aplicação
+│   ├── App.tsx                # Componente principal React
+│   ├── main.tsx               # Ponto de entrada do Frontend
+│   ├── predicao.py            # Script para fazer predições
+│   └── treino_modelo.py       # Script para treinar o modelo de IA
+├── modelo_enchente.joblib     # Modelo de IA pré-treinado
+├── requirements.txt           # Dependências do Python
+├── package.json               # Dependências do Node.js
+└── README.md                  # Este arquivo
+```
 
-Simply open [Lovable](https://lovable.dev/projects/967fbdc3-688d-4987-b114-5c20cb189d7b) and click on Share -> Publish.
+## 8\. Integrantes 🧑‍💻
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+  * **Nome Completo do Integrante 1** - RMXXXXX
+  * **Nome Completo do Integrante 2** - RMXXXXX
+  * **Nome Completo do Integrante 3** - RMXXXXX
+  * **Nome Completo do Integrante 4** - RMXXXXX
+  * **Nome Completo do Integrante 5** - RMXXXXX
