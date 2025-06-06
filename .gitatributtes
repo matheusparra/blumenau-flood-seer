@@ -1,0 +1,18 @@
+# Defina o comportamento padrão para todos os arquivos de texto
+* text=auto
+
+# Para arquivos que devem SEMPRE ter LF no repositório e no checkout (comum para scripts, etc.)
+# *.sh text eol=lf
+# *.py text eol=lf
+
+# Para arquivos que devem ter eol nativo do sistema no checkout, mas LF no repositório
+# *.txt text
+# *.ino text
+# *.c text
+# *.h text
+# libraries.txt text
+# sketch.ino text
+
+text=auto
+microcontrolador/libraries.txt text
+microcontrolador/sketch.ino text
