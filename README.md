@@ -9,14 +9,14 @@ Um projeto desenvolvido para a **Global Solution 2025.1 da FIAP**, focado na pre
 
 ### Tabela de Conteúdos
 
-1.  [Sobre o Projeto](https://www.google.com/search?q=%231-sobre-o-projeto-)
-2.  [Arquitetura da Solução](https://www.google.com/search?q=%232-arquitetura-da-solu%C3%A7%C3%A3o-)
-3.  [Fonte de Dados: AlertaBlu](https://www.google.com/search?q=%233-fonte-de-dados-alertablu-)
-4.  [Hardware e Simulação com Wokwi](https://www.google.com/search?q=%234-hardware-e-simula%C3%A7%C3%A3o-com-wokwi-%EF%B8%8F)
-5.  [Tecnologias Utilizadas](https://www.google.com/search?q=%235-tecnologias-utilizadas-)
-6.  [Como Executar o Projeto](https://www.google.com/search?q=%236-como-executar-o-projeto-)
-7.  [Estrutura do Repositório](https://www.google.com/search?q=%237-estrutura-do-reposit%C3%B3rio-)
-8.  [Integrantes](https://www.google.com/search?q=%238-integrantes-)
+1.  [Sobre o Projeto]
+2.  [Arquitetura da Solução]
+3.  [Fonte de Dados: AlertaBlu]
+4.  [Hardware e Simulação com Wokwi]
+5.  [Tecnologias Utilizadas]
+6.  [Como Executar o Projeto]
+7.  [Estrutura do Repositório]
+8.  [Integrantes]
 
 -----
 
