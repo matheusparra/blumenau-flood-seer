@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { Cloud, Droplets, Waves, ThermometerSun } from 'lucide-react';
@@ -17,18 +17,31 @@ interface WeatherDataProps {
 }
 
 const WeatherData: React.FC<WeatherDataProps> = ({ data, historicalData = [], detailed = false }) => {
-  // Converter dados do Supabase para formato do gráfico
-  const chartData = historicalData.map(point => ({
-    hour: new Date(point.created_at).toLocaleTimeString('pt-BR', { 
-      hour: '2-digit', 
-      minute: '2-digit' 
-    }),
-    precipitation: point.chuva_1h,
-    riverLevel: point.nivel_rio,
-    temperature: 20 + Math.random() * 10, // Simular temperatura
-    humidity: point.umidade,
-    fullDate: point.created_at
-  }));
+  const [chartData, setChartData] = useState<any[]>([]);
+
+  // Atualizar dados do gráfico quando historicalData mudar (tempo real)
+  useEffect(() => {
+    console.log('WeatherData: Atualizando dados históricos', historicalData.length, 'registros');
+    
+    const newChartData = historicalData.map(point => ({
+      hour: new Date(point.created_at).toLocaleTimeString('pt-BR', { 
+        hour: '2-digit', 
+        minute: '2-digit' 
+      }),
+      precipitation: Number(point.chuva_1h) || 0,
+      riverLevel: Number(point.nivel_rio) || 0,
+      temperature: 20 + Math.random() * 10, // Simular temperatura
+      humidity: Number(point.umidade) || 0,
+      fullDate: point.created_at
+    }));
+
+    setChartData(newChartData);
+  }, [historicalData]);
+
+  // Log dos dados atuais para debug
+  useEffect(() => {
+    console.log('WeatherData: Dados atuais recebidos', data);
+  }, [data]);
 
   if (detailed) {
     return (
@@ -90,23 +103,29 @@ const WeatherData: React.FC<WeatherDataProps> = ({ data, historicalData = [], de
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={200}>
-                <AreaChart data={chartData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="hour" />
-                  <YAxis />
-                  <Tooltip 
-                    formatter={(value) => [`${value}mm`, 'Precipitação']}
-                    labelFormatter={(label, payload) => {
-                      if (payload && payload[0]) {
-                        return new Date(payload[0].payload.fullDate).toLocaleString('pt-BR');
-                      }
-                      return label;
-                    }}
-                  />
-                  <Area type="monotone" dataKey="precipitation" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.3} />
-                </AreaChart>
-              </ResponsiveContainer>
+              {chartData.length > 0 ? (
+                <ResponsiveContainer width="100%" height={200}>
+                  <AreaChart data={chartData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="hour" />
+                    <YAxis />
+                    <Tooltip 
+                      formatter={(value) => [`${value}mm`, 'Precipitação']}
+                      labelFormatter={(label, payload) => {
+                        if (payload && payload[0]) {
+                          return new Date(payload[0].payload.fullDate).toLocaleString('pt-BR');
+                        }
+                        return label;
+                      }}
+                    />
+                    <Area type="monotone" dataKey="precipitation" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.3} />
+                  </AreaChart>
+                </ResponsiveContainer>
+              ) : (
+                <div className="h-48 flex items-center justify-center text-gray-500">
+                  <p>Aguardando dados...</p>
+                </div>
+              )}
             </CardContent>
           </Card>
 
@@ -118,23 +137,29 @@ const WeatherData: React.FC<WeatherDataProps> = ({ data, historicalData = [], de
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={200}>
-                <LineChart data={chartData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="hour" />
-                  <YAxis />
-                  <Tooltip 
-                    formatter={(value) => [`${value}m`, 'Nível do Rio']}
-                    labelFormatter={(label, payload) => {
-                      if (payload && payload[0]) {
-                        return new Date(payload[0].payload.fullDate).toLocaleString('pt-BR');
-                      }
-                      return label;
-                    }}
-                  />
-                  <Line type="monotone" dataKey="riverLevel" stroke="#2563eb" strokeWidth={2} />
-                </LineChart>
-              </ResponsiveContainer>
+              {chartData.length > 0 ? (
+                <ResponsiveContainer width="100%" height={200}>
+                  <LineChart data={chartData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="hour" />
+                    <YAxis />
+                    <Tooltip 
+                      formatter={(value) => [`${value}m`, 'Nível do Rio']}
+                      labelFormatter={(label, payload) => {
+                        if (payload && payload[0]) {
+                          return new Date(payload[0].payload.fullDate).toLocaleString('pt-BR');
+                        }
+                        return label;
+                      }}
+                    />
+                    <Line type="monotone" dataKey="riverLevel" stroke="#2563eb" strokeWidth={2} />
+                  </LineChart>
+                </ResponsiveContainer>
+              ) : (
+                <div className="h-48 flex items-center justify-center text-gray-500">
+                  <p>Aguardando dados...</p>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
@@ -143,7 +168,7 @@ const WeatherData: React.FC<WeatherDataProps> = ({ data, historicalData = [], de
         {chartData.length > 0 && (
           <Card>
             <CardHeader>
-              <CardTitle>Estatísticas dos Dados Reais</CardTitle>
+              <CardTitle>Estatísticas dos Dados Reais (Tempo Real)</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
@@ -180,35 +205,44 @@ const WeatherData: React.FC<WeatherDataProps> = ({ data, historicalData = [], de
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <ResponsiveContainer width="100%" height={250}>
-          <LineChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="hour" />
-            <YAxis />
-            <Tooltip 
-              labelFormatter={(label, payload) => {
-                if (payload && payload[0]) {
-                  return new Date(payload[0].payload.fullDate).toLocaleString('pt-BR');
-                }
-                return label;
-              }}
-            />
-            <Line 
-              type="monotone" 
-              dataKey="precipitation" 
-              stroke="#3b82f6" 
-              name="Precipitação (mm)"
-              strokeWidth={2}
-            />
-            <Line 
-              type="monotone" 
-              dataKey="riverLevel" 
-              stroke="#059669" 
-              name="Nível do Rio (m)"
-              strokeWidth={2}
-            />
-          </LineChart>
-        </ResponsiveContainer>
+        {chartData.length > 0 ? (
+          <ResponsiveContainer width="100%" height={250}>
+            <LineChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="hour" />
+              <YAxis />
+              <Tooltip 
+                labelFormatter={(label, payload) => {
+                  if (payload && payload[0]) {
+                    return new Date(payload[0].payload.fullDate).toLocaleString('pt-BR');
+                  }
+                  return label;
+                }}
+              />
+              <Line 
+                type="monotone" 
+                dataKey="precipitation" 
+                stroke="#3b82f6" 
+                name="Precipitação (mm)"
+                strokeWidth={2}
+              />
+              <Line 
+                type="monotone" 
+                dataKey="riverLevel" 
+                stroke="#059669" 
+                name="Nível do Rio (m)"
+                strokeWidth={2}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        ) : (
+          <div className="h-64 flex items-center justify-center text-gray-500">
+            <div className="text-center">
+              <Waves className="h-12 w-12 text-blue-500 animate-pulse mx-auto mb-2" />
+              <p>Carregando dados em tempo real...</p>
+            </div>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
