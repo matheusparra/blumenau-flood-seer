@@ -1,16 +1,16 @@
-
 import React from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { AlertTriangle, CheckCircle, XCircle, Bell, Volume2 } from 'lucide-react';
 
+// 1. A interface de propriedades foi simplificada.
+// A função 'onAlertChange' não é mais necessária, pois o alerta é controlado pelo componente pai.
 interface AlertSystemProps {
   currentAlert: string;
-  onAlertChange: (alert: string) => void;
 }
 
-const AlertSystem: React.FC<AlertSystemProps> = ({ currentAlert, onAlertChange }) => {
+const AlertSystem: React.FC<AlertSystemProps> = ({ currentAlert }) => {
   const getAlertConfig = () => {
     switch (currentAlert) {
       case 'critico':
@@ -58,11 +58,6 @@ const AlertSystem: React.FC<AlertSystemProps> = ({ currentAlert, onAlertChange }
 
   const config = getAlertConfig();
 
-  // Função para simular mudança de alerta (para demonstração)
-  const simulateAlert = (level: string) => {
-    onAlertChange(level);
-  };
-
   return (
     <div className="space-y-4 mb-6">
       {/* Alert Principal */}
@@ -90,45 +85,8 @@ const AlertSystem: React.FC<AlertSystemProps> = ({ currentAlert, onAlertChange }
           </div>
         </div>
       </Alert>
-
-      {/* Controles de Demonstração */}
-      <div className="bg-white p-4 rounded-lg border border-gray-200">
-        <h4 className="text-sm font-medium text-gray-700 mb-3">Simulação de Alertas (Demo):</h4>
-        <div className="flex gap-2 flex-wrap">
-          <Button
-            size="sm"
-            variant={currentAlert === 'baixo' ? 'default' : 'outline'}
-            onClick={() => simulateAlert('baixo')}
-            className="text-xs"
-          >
-            Baixo Risco
-          </Button>
-          <Button
-            size="sm"
-            variant={currentAlert === 'medio' ? 'default' : 'outline'}
-            onClick={() => simulateAlert('medio')}
-            className="text-xs"
-          >
-            Médio Risco
-          </Button>
-          <Button
-            size="sm"
-            variant={currentAlert === 'alto' ? 'default' : 'outline'}
-            onClick={() => simulateAlert('alto')}
-            className="text-xs"
-          >
-            Alto Risco
-          </Button>
-          <Button
-            size="sm"
-            variant={currentAlert === 'critico' ? 'default' : 'outline'}
-            onClick={() => simulateAlert('critico')}
-            className="text-xs"
-          >
-            Risco Crítico
-          </Button>
-        </div>
-      </div>
+      
+      {/* 2. O bloco de simulação de alertas foi removido. */}
 
       {/* Instruções específicas por nível */}
       {currentAlert !== 'baixo' && (
