@@ -1,0 +1,71 @@
+
+version: '3.8'
+
+services:
+  # Backend Flask
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: blumenau-flood-backend
+    environment:
+      - FLASK_ENV=production
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_SERVICE_KEY=${SUPABASE_SERVICE_KEY}
+    volumes:
+      - ./Data:/app/Data:ro
+      - ./logs:/app/logs
+    networks:
+      - flood-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Frontend React
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: blumenau-flood-frontend
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+    networks:
+      - flood-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Simulador IoT (opcional, para desenvolvimento)
+  simulator:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: blumenau-flood-simulator
+    command: ["python", "microcontrolador/simulator.py"]
+    environment:
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_SERVICE_KEY=${SUPABASE_SERVICE_KEY}
+    depends_on:
+      - backend
+    networks:
+      - flood-network
+    restart: unless-stopped
+    profiles:
+      - simulator
+
+networks:
+  flood-network:
+    driver: bridge
+
+volumes:
+  logs:
+    driver: local

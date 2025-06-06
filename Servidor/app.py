@@ -31,6 +31,29 @@ except FileNotFoundError:
     print("AVISO: Modelo 'modelo_random_forest.joblib' não encontrado. As predições não funcionarão.")
     model = None
 
+@app.route('/health', methods=['GET'])
+def health_check():
+    """
+    Endpoint de health check para monitoramento.
+    """
+    try:
+        # Verificar conexão com Supabase
+        test_query = supabase.table('flood_data').select('id').limit(1).execute()
+        db_status = "ok" if test_query.data is not None else "error"
+        
+        return jsonify({
+            'status': 'healthy',
+            'database': db_status,
+            'model': 'loaded' if model else 'not_loaded',
+            'timestamp': pd.Timestamp.now().isoformat()
+        }), 200
+    except Exception as e:
+        return jsonify({
+            'status': 'unhealthy',
+            'error': str(e),
+            'timestamp': pd.Timestamp.now().isoformat()
+        }), 500
+
 @app.route('/add-reading', methods=['POST'])
 def add_sensor_reading():
     """

@@ -1,0 +1,31 @@
+
+FROM python:3.11-slim
+
+# Definir diretório de trabalho
+WORKDIR /app
+
+# Instalar dependências do sistema
+RUN apt-get update && apt-get install -y \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copiar requirements
+COPY requirements.txt .
+
+# Instalar dependências Python
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiar código fonte
+COPY . .
+
+# Criar diretório para modelos se não existir
+RUN mkdir -p modelo
+
+# Copiar modelo pré-treinado se existir
+COPY Servidor/modelo_random_forest.joblib ./modelo_random_forest.joblib 2>/dev/null || true
+
+# Expor porta
+EXPOSE 5000
+
+# Comando para iniciar a aplicação
+CMD ["python", "Servidor/app.py"]
