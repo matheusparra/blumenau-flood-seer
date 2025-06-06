@@ -167,8 +167,8 @@ Agora, com os três componentes rodando, acesse **`http://localhost:5173`** em s
 
 ## 8\. Integrantes 🧑‍💻
 
-  * **Nome Completo do Integrante 1** - RMXXXXX
-  * **Nome Completo do Integrante 2** - RMXXXXX
-  * **Nome Completo do Integrante 3** - RMXXXXX
-  * **Nome Completo do Integrante 4** - RMXXXXX
-  * **Nome Completo do Integrante 5** - RMXXXXX
+  * **Matheus Parra** - RM561907
+  * **Otavio Custodio de Oliveira** - RM565606
+  * **Tiago Alves Cordeiro** - RM561791 
+  * **Thiago Henrique Pereira de Almeida Santos** - RM563327
+  * **Leandro Arthur Marinho Ferreira** - RM565240
