@@ -1,3 +1,10 @@
+# Frameworks e Servidor
+Flask
+gunicorn
+python-dotenv
+supabase
+
+# Machine Learning e Dados
 pandas
 scikit-learn
 joblib
