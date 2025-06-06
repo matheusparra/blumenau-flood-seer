@@ -1,6 +1,3 @@
-Ok, com base na sua solicitação e na análise completa dos arquivos, aqui está um `README.md` completo e detalhado para o projeto **Blumenau Flood Seer**. Ele incorpora suas especificações sobre a fonte de dados e a simulação com Wokwi.
-
------
 
 # 🌊 Blumenau Flood Seer
 
