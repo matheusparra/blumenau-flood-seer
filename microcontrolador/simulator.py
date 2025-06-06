@@ -3,7 +3,7 @@ import time
 import random
 
 # URL da sua API Flask local
-URL = "http://localhost:5000/dados"
+URL = "http://localhost:5000/add-reading"
 
 def gerar_dados_simulados():
     return {
