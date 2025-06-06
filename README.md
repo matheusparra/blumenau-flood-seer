@@ -140,13 +140,13 @@ Agora, com os três componentes rodando, acesse **`http://localhost:5173`** em s
 
 ```
 .
-├── Data/
-│   └── dados_enchentes.csv    # Base de dados do AlertaBlu
+
 ├── Lib/                       # Dependências do ambiente virtual
 ├── microcontrolador/
 │   ├── diagram.json           # Diagrama do circuito no Wokwi
 │   └── simulator.py           # Script que simula o envio de dados do sensor
 ├── Servidor/
+│   ├── modelo_enchente.joblib     # Modelo de IA pré-treinado
 │   └── app.py                 # Servidor API em Flask
 ├── src/
 │   ├── components/            # Componentes React
@@ -156,7 +156,6 @@ Agora, com os três componentes rodando, acesse **`http://localhost:5173`** em s
 │   ├── main.tsx               # Ponto de entrada do Frontend
 │   ├── predicao.py            # Script para fazer predições
 │   └── treino_modelo.py       # Script para treinar o modelo de IA
-├── modelo_enchente.joblib     # Modelo de IA pré-treinado
 ├── requirements.txt           # Dependências do Python
 ├── package.json               # Dependências do Node.js
 └── README.md                  # Este arquivo
