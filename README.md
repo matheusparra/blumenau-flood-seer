@@ -1,5 +1,5 @@
 
-# 🌊 Blumenau Flood Seer
+# 🌊 BluArk
 
 **Status:** `Prova de Conceito (POC) Funcional`
 
@@ -22,7 +22,7 @@ Um projeto desenvolvido para a **Global Solution 2025.1 da FIAP**, focado na pre
 
 ## 1\. Sobre o Projeto 🎯
 
-O **Blumenau Flood Seer** é uma plataforma digital completa que visa combater os desafios impostos pelas cheias recorrentes em Blumenau. A solução integra dados históricos e em tempo real para alimentar um modelo de Machine Learning capaz de prever o nível do rio, gerando alertas e fornecendo visualizações claras para auxiliar na tomada de decisão de autoridades e cidadãos.
+O **BluArk** é uma plataforma digital completa que visa combater os desafios impostos pelas cheias recorrentes em Blumenau. A solução integra dados históricos e em tempo real para alimentar um modelo de Machine Learning capaz de prever o nível do rio, gerando alertas e fornecendo visualizações claras para auxiliar na tomada de decisão de autoridades e cidadãos.
 
 O sistema é composto por:
 
